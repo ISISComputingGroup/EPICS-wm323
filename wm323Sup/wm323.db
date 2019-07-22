@@ -1,3 +1,13 @@
+record(bo, "$(P)SIM")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(ZNAM, "NO")
+    field(ONAM, "YES")
+    field(VAL, "$(RECSIM=0)")
+    field(PINI, "YES")
+}
+
 record(bo, "$(P)DISABLE")
 {
     field(DESC, "Disable comms")
@@ -7,3 +17,37 @@ record(bo, "$(P)DISABLE")
     field(ZNAM, "COMMS ENABLED")
     field(ONAM, "COMMS DISABLED")
 }
+
+record(longin, "$(P)SPEED") {
+  field(DESC, "Current pump speed")
+  field(SCAN, "1 second")
+  field(DTYP, "stream")
+  field(INP, "@wm323.proto getSpeed $(PORT)")
+  field(EGU, "rpm")
+  field(SIML, "$(P)SIM")
+  field(SIOL, "$(P)SIM:SPEED")
+  field(SDIS, "$(P)DISABLE")
+  info(INTEREST, "MEDIUM")
+  info(archive, "VAL")
+}
+
+record(longout, "$(P)SPEED:SP") {
+  field(DESC, "Pump speed set point")
+  field(SCAN, "Passive")
+  field(DTYP, "stream")
+  field(OUT, "@wm323.proto setSpeed $(PORT)")
+  field(OMSL, "supervisory")
+  field(EGU, "rpm")
+  field(SIML, "$(P)SIM")
+  field(SIOL, "$(P)SIM:SPEED:SP")
+  field(SDIS, "$(P)DISABLE")
+}
+
+
+####################################
+######## Simulation records ########
+####################################
+
+
+record(ao, "$(P)SIM:SPEED"){}
+alias("$(P)SIM:SPEED", "$(P)SIM:SPEED:SP")
