@@ -8,5 +8,29 @@ setSpeed {
 
 getSpeed {
     out "1RS";
-    in "%*s %d %*{CW|CCW} %*{0|1} !";
+    in "%*s %d %*{CCW|CW} %*{0|1} !";
+    wait 25;
+}
+
+
+setDirection {
+    out "1%{RL|RR}";
+    wait 25;
+}
+
+getDirection {
+    out "1RS";
+    in "%*s %*d %{CCW|CW} %*{0|1} !";
+    wait 25;
+}
+
+setRunning {
+    out "1%{ST|GO}";
+    wait 25;
+}
+
+getRunning {
+    out "1RS";
+    in "%*s %*d %*{CCW|CW} %{0|1} !";
+    wait 25; 
 }

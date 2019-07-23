@@ -27,7 +27,7 @@ record(longin, "$(P)SPEED") {
   field(SIML, "$(P)SIM")
   field(SIOL, "$(P)SIM:SPEED")
   field(SDIS, "$(P)DISABLE")
-  info(INTEREST, "MEDIUM")
+  info(INTEREST, "HIGH")
   info(archive, "VAL")
 }
 
@@ -36,11 +36,64 @@ record(longout, "$(P)SPEED:SP") {
   field(SCAN, "Passive")
   field(DTYP, "stream")
   field(OUT, "@wm323.proto setSpeed $(PORT)")
-  field(OMSL, "supervisory")
   field(EGU, "rpm")
+  field(DRVL, 3)
+  field(DRVH, 400)
   field(SIML, "$(P)SIM")
   field(SIOL, "$(P)SIM:SPEED:SP")
   field(SDIS, "$(P)DISABLE")
+}
+
+record(bi, "$(P)DIRECTION") {
+    field(DESC, "Pump rotation direction")
+    field(SCAN, "1 second")
+    field(DTYP, "stream")
+    field(INP, "@wm323.proto getDirection $(PORT)")
+    field(ZNAM, "Anti-clockwise")
+    field(ONAM, "Clockwise")
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:DIRECTION")
+    field(SDIS, "$(P)DISABLE")
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+}
+
+record(bo, "$(P)DIRECTION:SP") {
+    field(DESC, "Pump direction set point")
+    field(SCAN, "Passive")
+    field(DTYP, "stream")
+    field(OUT, "@wm323.proto setDirection $(PORT)")
+    field(ZNAM, "Anti-clockwise")
+    field(ONAM, "Clockwise")
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:DIRECTION:SP")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(bi, "$(P)RUNNING") {
+    field(DESC, "Pump running status")
+    field(SCAN, "1 second")
+    field(DTYP, "stream")
+    field(INP, "@wm323.proto getRunning $(PORT)")
+    field(ZNAM, "Stopped")
+    field(ONAM, "Running")
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:RUNNING")
+    field(SDIS, "$(P)DISABLE")
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+}
+
+record(bo, "$(P)RUNNING:SP") {
+    field(DESC, "Pump running status setpoint")
+    field(SCAN, "Passive")
+    field(DTYP, "stream")
+    field(OUT, "@wm323.proto setRunning $(PORT)")
+    field(ZNAM, "Stopped")
+    field(ONAM, "Running")
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:RUNNING:SP")
+    field(SDIS, "$(P)DISABLE")
 }
 
 
@@ -51,3 +104,9 @@ record(longout, "$(P)SPEED:SP") {
 
 record(ao, "$(P)SIM:SPEED"){}
 alias("$(P)SIM:SPEED", "$(P)SIM:SPEED:SP")
+
+record(bo, "$(P)SIM:DIRECTION"){}
+alias("$(P)SIM:DIRECTION", "$(P)SIM:DIRECTION:SP")
+
+record(bo, "$(P)SIM:RUNNING"){}
+alias("$(P)SIM:RUNNING", "$(P)SIM:RUNNING:SP")
