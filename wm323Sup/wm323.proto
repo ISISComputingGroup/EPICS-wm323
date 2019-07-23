@@ -29,8 +29,18 @@ setRunning {
     wait 25;
 }
 
-getRunning {
+getStatus {
     out "1RS";
     in "%*s %*d %*{CCW|CW} %{0|1} !";
     wait 25; 
+}
+
+run {
+    out "1GO";
+    wait 25;
+}
+
+stop {
+    out "1ST";
+    wait 25;
 }

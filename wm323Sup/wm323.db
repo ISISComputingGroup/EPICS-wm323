@@ -18,7 +18,8 @@ record(bo, "$(P)DISABLE")
     field(ONAM, "COMMS DISABLED")
 }
 
-record(longin, "$(P)SPEED") {
+record(longin, "$(P)SPEED")
+{
   field(DESC, "Current pump speed")
   field(SCAN, "1 second")
   field(DTYP, "stream")
@@ -31,7 +32,8 @@ record(longin, "$(P)SPEED") {
   info(archive, "VAL")
 }
 
-record(longout, "$(P)SPEED:SP") {
+record(longout, "$(P)SPEED:SP")
+{
   field(DESC, "Pump speed set point")
   field(SCAN, "Passive")
   field(DTYP, "stream")
@@ -44,13 +46,17 @@ record(longout, "$(P)SPEED:SP") {
   field(SDIS, "$(P)DISABLE")
 }
 
-record(bi, "$(P)DIRECTION") {
+record(bi, "$(P)DIRECTION")
+{
     field(DESC, "Pump rotation direction")
     field(SCAN, "1 second")
     field(DTYP, "stream")
+
     field(INP, "@wm323.proto getDirection $(PORT)")
+
     field(ZNAM, "Anti-clockwise")
     field(ONAM, "Clockwise")
+
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:DIRECTION")
     field(SDIS, "$(P)DISABLE")
@@ -58,41 +64,72 @@ record(bi, "$(P)DIRECTION") {
     info(archive, "VAL")
 }
 
-record(bo, "$(P)DIRECTION:SP") {
+record(bo, "$(P)DIRECTION:SP")
+{
     field(DESC, "Pump direction set point")
     field(SCAN, "Passive")
     field(DTYP, "stream")
+
     field(OUT, "@wm323.proto setDirection $(PORT)")
+
     field(ZNAM, "Anti-clockwise")
     field(ONAM, "Clockwise")
+
+    info(INTEREST, "HIGH")
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:DIRECTION:SP")
     field(SDIS, "$(P)DISABLE")
 }
 
-record(bi, "$(P)RUNNING") {
+record(bi, "$(P)STATUS")
+{
     field(DESC, "Pump running status")
     field(SCAN, "1 second")
     field(DTYP, "stream")
-    field(INP, "@wm323.proto getRunning $(PORT)")
+
+    field(INP, "@wm323.proto getStatus $(PORT)")
+
     field(ZNAM, "Stopped")
     field(ONAM, "Running")
+
     field(SIML, "$(P)SIM")
-    field(SIOL, "$(P)SIM:RUNNING")
+    field(SIOL, "$(P)SIM:STATUS")
     field(SDIS, "$(P)DISABLE")
     info(INTEREST, "HIGH")
     info(archive, "VAL")
 }
 
-record(bo, "$(P)RUNNING:SP") {
-    field(DESC, "Pump running status setpoint")
+record(bo, "$(P)RUN:SP")
+{
+    field(DESC, "Starts the pump.")
     field(SCAN, "Passive")
     field(DTYP, "stream")
-    field(OUT, "@wm323.proto setRunning $(PORT)")
-    field(ZNAM, "Stopped")
-    field(ONAM, "Running")
+
+    field(OUT,  "@wm323.proto run($(P),ID,ERROR) $(PORT)")
+    
+    field(ZNAM, "")
+    field(ONAM, "Run")
+    
+    info(INTEREST, "HIGH")
     field(SIML, "$(P)SIM")
-    field(SIOL, "$(P)SIM:RUNNING:SP")
+    field(SIOL, "$(P)SIM:RUN:SP")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(bo, "$(P)STOP:SP")
+{
+    field(DESC, "Stops the pump.")
+    field(SCAN, "Passive")
+    field(DTYP, "stream")
+
+    field(OUT,  "@wm323.proto stop($(P),ID,ERROR) $(PORT)")
+
+    field(ZNAM, "")
+    field(ONAM, "Stop")
+
+    info(INTEREST, "HIGH")
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:STOP:SP")
     field(SDIS, "$(P)DISABLE")
 }
 
