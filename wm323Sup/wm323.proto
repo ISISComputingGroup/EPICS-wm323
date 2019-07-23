@@ -1,6 +1,12 @@
 
 Terminator = CR;
 
+getType {
+    out "1RS";
+    in "%s %*d %*{CCW|CW} %*{0|1} !";
+    wait 25;
+}
+
 setSpeed {
     out "1SP%03d";
     wait 25;
@@ -24,7 +30,7 @@ getDirection {
     wait 25;
 }
 
-setRunning {
+setStatus {
     out "1%{ST|GO}";
     wait 25;
 }
