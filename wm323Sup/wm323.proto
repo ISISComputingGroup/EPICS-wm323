@@ -1,4 +1,9 @@
 
+# wait 25 is after every command since the manual states thst
+# "There should be at least 10mS between commands."
+# 25ms was chosen since setting it too close to 10ms might cause problems,
+# but it is low enough to be not noticable and slow.
+
 Terminator = CR;
 
 getType {

@@ -35,6 +35,7 @@ record(longin, "$(P)SPEED")
     info(archive, "VAL")
 }
 
+# According to the manual, the speed can be set between 3 and 400 rpm
 record(longout, "$(P)SPEED:SP")
 {
     field(DESC, "Pump speed set point")
@@ -47,7 +48,6 @@ record(longout, "$(P)SPEED:SP")
     field(DRVL, 3)
     field(DRVH, 400)
 
-    info(INTEREST, "HIGH")
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:SPEED:SP")
     field(SDIS, "$(P)DISABLE")
@@ -82,7 +82,6 @@ record(bo, "$(P)DIRECTION:SP")
     field(ZNAM, "Anti-Clockwise")
     field(ONAM, "Clockwise")
 
-    info(INTEREST, "HIGH")
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:DIRECTION:SP")
     field(SDIS, "$(P)DISABLE")
@@ -116,7 +115,6 @@ record(bo, "$(P)STATUS:SP") {
     field(ZNAM, "Stopped")
     field(ONAM, "Running")
     
-    info(INTEREST, "HIGH")
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:STATUS:SP")
     field(SDIS, "$(P)DISABLE")
@@ -133,7 +131,6 @@ record(bo, "$(P)RUN:SP")
     field(ZNAM, "")
     field(ONAM, "Run")
     
-    info(INTEREST, "HIGH")
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:RUN:SP")
     field(SDIS, "$(P)DISABLE")
@@ -150,7 +147,6 @@ record(bo, "$(P)STOP:SP")
     field(ZNAM, "")
     field(ONAM, "Stop")
 
-    info(INTEREST, "HIGH")
     field(SIML, "$(P)SIM")
     field(SIOL, "$(P)SIM:STOP:SP")
     field(SDIS, "$(P)DISABLE")
@@ -183,3 +179,21 @@ alias("$(P)SIM:DIRECTION", "$(P)SIM:DIRECTION:SP")
 
 record(bo, "$(P)SIM:STATUS"){}
 alias("$(P)SIM:STATUS", "$(P)SIM:STATUS:SP")
+
+record(bo,"$(P)SIM:RUN:SP")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+}
+
+record(bo,"$(P)SIM:STOP:SP")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+}
+
+record(stringout,"$(P)SIM:TYPE")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+}
