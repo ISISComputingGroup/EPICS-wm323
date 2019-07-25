@@ -1,0 +1,199 @@
+record(bo, "$(P)SIM")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+    field(ZNAM, "NO")
+    field(ONAM, "YES")
+    field(VAL, "$(RECSIM=0)")
+    field(PINI, "YES")
+}
+
+record(bo, "$(P)DISABLE")
+{
+    field(DESC, "Disable comms")
+    field(PINI, "YES")
+    field(VAL, "$(DISABLE=0)")
+    field(OMSL, "supervisory")
+    field(ZNAM, "COMMS ENABLED")
+    field(ONAM, "COMMS DISABLED")
+}
+
+record(longin, "$(P)SPEED")
+{
+    field(DESC, "Current pump speed")
+    field(SCAN, "1 second")
+    field(DTYP, "stream")
+  
+    field(INP, "@wm323.proto getSpeed $(PORT)")
+  
+    field(EGU, "rpm")
+  
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:SPEED")
+    field(SDIS, "$(P)DISABLE")
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+}
+
+# According to the manual, the speed can be set between 3 and 400 rpm
+record(longout, "$(P)SPEED:SP")
+{
+    field(DESC, "Pump speed set point")
+    field(SCAN, "Passive")
+    field(DTYP, "stream")
+  
+    field(OUT, "@wm323.proto setSpeed $(PORT)")
+  
+    field(EGU, "rpm")
+    field(DRVL, 3)
+    field(DRVH, 400)
+
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:SPEED:SP")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(bi, "$(P)DIRECTION")
+{
+    field(DESC, "Pump rotation direction")
+    field(SCAN, "1 second")
+    field(DTYP, "stream")
+
+    field(INP, "@wm323.proto getDirection $(PORT)")
+
+    field(ZNAM, "Anti-Clockwise")
+    field(ONAM, "Clockwise")
+
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:DIRECTION")
+    field(SDIS, "$(P)DISABLE")
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+}
+
+record(bo, "$(P)DIRECTION:SP")
+{
+    field(DESC, "Pump direction set point")
+    field(SCAN, "Passive")
+    field(DTYP, "stream")
+
+    field(OUT, "@wm323.proto setDirection $(PORT)")
+
+    field(ZNAM, "Anti-Clockwise")
+    field(ONAM, "Clockwise")
+
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:DIRECTION:SP")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(bi, "$(P)STATUS")
+{
+    field(DESC, "Pump running status")
+    field(SCAN, "1 second")
+    field(DTYP, "stream")
+
+    field(INP, "@wm323.proto getStatus $(PORT)")
+
+    field(ZNAM, "Stopped")
+    field(ONAM, "Running")
+
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:STATUS")
+    field(SDIS, "$(P)DISABLE")
+    info(INTEREST, "HIGH")
+    info(archive, "VAL")
+}
+
+record(bo, "$(P)STATUS:SP") {
+    field(DESC, "Pump running status setpoint")
+    field(SCAN, "Passive")
+    field(DTYP, "stream")
+    
+    field(OUT, "@wm323.proto setStatus $(PORT)")
+    
+    field(ZNAM, "Stopped")
+    field(ONAM, "Running")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:STATUS:SP")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(bo, "$(P)RUN:SP")
+{
+    field(DESC, "Starts the pump.")
+    field(SCAN, "Passive")
+    field(DTYP, "stream")
+
+    field(OUT,  "@wm323.proto run $(PORT)")
+    
+    field(ZNAM, "")
+    field(ONAM, "Run")
+    
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:RUN:SP")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(bo, "$(P)STOP:SP")
+{
+    field(DESC, "Stops the pump.")
+    field(SCAN, "Passive")
+    field(DTYP, "stream")
+
+    field(OUT,  "@wm323.proto stop $(PORT)")
+
+    field(ZNAM, "")
+    field(ONAM, "Stop")
+
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:STOP:SP")
+    field(SDIS, "$(P)DISABLE")
+}
+
+record(stringin, "$(P)TYPE")
+{
+    field(DESC, "Pump type")
+    field(SCAN, "10 second")
+    field(DTYP, "stream")
+
+    field(INP, "@wm323.proto getType $(PORT)")
+
+    field(SIML, "$(P)SIM")
+    field(SIOL, "$(P)SIM:TYPE")
+    field(SDIS, "$(P)DISABLE")
+}
+
+
+####################################
+######## Simulation records ########
+####################################
+
+
+record(ao, "$(P)SIM:SPEED"){}
+alias("$(P)SIM:SPEED", "$(P)SIM:SPEED:SP")
+
+record(bo, "$(P)SIM:DIRECTION"){}
+alias("$(P)SIM:DIRECTION", "$(P)SIM:DIRECTION:SP")
+
+record(bo, "$(P)SIM:STATUS"){}
+alias("$(P)SIM:STATUS", "$(P)SIM:STATUS:SP")
+
+record(bo,"$(P)SIM:RUN:SP")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+}
+
+record(bo,"$(P)SIM:STOP:SP")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+}
+
+record(stringout,"$(P)SIM:TYPE")
+{
+    field(SCAN, "Passive")
+    field(DTYP, "Soft Channel")
+}
