@@ -5,53 +5,54 @@
 # but it is low enough to be not noticable and slow.
 
 Terminator = CR;
+input_delay = 50;
 
 getType {
     out "1RS";
-    in "%s %*d %*{CCW|CW} %*{0|1} !";
-    wait 25;
+    in "%s %*f %*{CCW|CW} %*{0|1} !";
+    wait $input_delay;
 }
 
 setSpeed {
-    out "1SP%03d";
-    wait 25;
+    out "1SP %f";
+    wait $input_delay;
 }
 
 getSpeed {
     out "1RS";
-    in "%*s %d %*{CCW|CW} %*{0|1} !";
-    wait 25;
+    in "%*s %f %*{CCW|CW} %*{0|1} !";
+    wait $input_delay;
 }
 
 
 setDirection {
     out "1%{RL|RR}";
-    wait 25;
+    wait $input_delay;
 }
 
 getDirection {
     out "1RS";
-    in "%*s %*d %{CCW|CW} %*{0|1} !";
-    wait 25;
+    in "%*s %*f %{CCW|CW} %*{0|1} !";
+    wait $input_delay;
 }
 
 setStatus {
     out "1%{ST|GO}";
-    wait 25;
+    wait $input_delay;
 }
 
 getStatus {
     out "1RS";
-    in "%*s %*d %*{CCW|CW} %{0|1} !";
-    wait 25; 
+    in "%*s %*f %*{CCW|CW} %{0|1} !";
+    wait $input_delay; 
 }
 
 run {
     out "1GO";
-    wait 25;
+    wait $input_delay;
 }
 
 stop {
     out "1ST";
-    wait 25;
+    wait $input_delay;
 }

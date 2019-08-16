@@ -18,7 +18,7 @@ record(bo, "$(P)DISABLE")
     field(ONAM, "COMMS DISABLED")
 }
 
-record(longin, "$(P)SPEED")
+record(ai, "$(P)SPEED")
 {
     field(DESC, "Current pump speed")
     field(SCAN, "1 second")
@@ -36,7 +36,7 @@ record(longin, "$(P)SPEED")
 }
 
 # According to the manual, the speed can be set between 3 and 400 rpm
-record(longout, "$(P)SPEED:SP")
+record(ao, "$(P)SPEED:SP")
 {
     field(DESC, "Pump speed set point")
     field(SCAN, "Passive")
